@@ -1,0 +1,16 @@
+# http://standards.freedesktop.org/desktop-entry-spec/desktop-entry-spec-1.0.html
+[Desktop Entry]
+Type=Application
+Version=master
+Encoding=UTF-8
+Name=Pepperscore
+Icon=${SNAP}/meta/gui/pepperscore128.png
+MimeType=x-scheme-handler/pepperscore;
+Exec=pepperscore
+Terminal=false
+Categories=Office;Finance;
+Comment=Pepperscore P2P Hybrid Cryptocurrency
+Keywords=internet;bitcoin;pepperscore;
+Comment[fr]=Pepperscore, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Pepperscore, eşten eşe kriptografik sanal para birimi
+Comments[es]=Pepperscore, moneda virtual criptográfica peer-to-peer
