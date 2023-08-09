@@ -5,14 +5,10 @@ INCLUDEPATH += src src/json src/qt
 QT += core gui network widgets
 DEFINES += ENABLE_WALLET
 DEFINES += BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE
-
 CONFIG += no_include_pwd
 CONFIG += thread
 CONFIG += static 
-QMAKE_CFLAGS += -std=c99
-QMAKE_CXXFLAGS += -fpermissive -std=gnu++11
-
-
+QMAKE_CXXFLAGS += -fpermissive -std=gnu++11 -Wno-deprecated-declarations
 
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets
@@ -79,7 +75,7 @@ QMAKE_LFLAGS *= -fstack-protector-all --param ssp-buffer-size=1
 # for compiling a wallet for x86_64 machines - remove `,--large-address-aware` option below as it is ment for 32bit systems!
 
 #win32:QMAKE_LFLAGS *= -Wl,--dynamicbase -Wl,--nxcompat,--large-address-aware -static
-win32:QMAKE_LFLAGS *= -Wl,--dynamicbase -Wl,--nxcompat -static
+win32:QMAKE_LFLAGS *= -Wl,--dynamicbase -Wl,--nxcompat
 win32:QMAKE_LFLAGS += -static-libgcc -static-libstdc++
 
 # use: qmake "USE_QRCODE=1"
@@ -101,7 +97,8 @@ contains(USE_UPNP, -) {
     count(USE_UPNP, 0) {
         USE_UPNP=1
     }
-    DEFINES += USE_UPNP=$$USE_UPNP STATICLIB MINIUPNP_STATICLIB
+#    DEFINES += USE_UPNP=$$USE_UPNP STATICLIB MINIUPNP_STATICLIB
+    DEFINES += USE_UPNP=$$USE_UPNP MINIUPNP_STATICLIB
     INCLUDEPATH += $$MINIUPNPC_INCLUDE_PATH
     LIBS += $$join(MINIUPNPC_LIB_PATH,,-L,) -lminiupnpc
     win32:LIBS += -liphlpapi
@@ -478,13 +475,19 @@ macx:QMAKE_LFLAGS_THREAD += -pthread
 macx:QMAKE_CXXFLAGS_THREAD += -pthread
 macx:QMAKE_INFO_PLIST = share/qt/Info.plist
 
+
 # Set libraries and includes at end, to use platform-defined defaults if not overridden
-INCLUDEPATH += $$BOOST_INCLUDE_PATH $$BDB_INCLUDE_PATH $$OPENSSL_INCLUDE_PATH $$QRENCODE_INCLUDE_PATH
-LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
+INCLUDEPATH += $$BOOST_INCLUDE_PATH $$BDB_INCLUDE_PATH $$OPENSSL_INCLUDE_PATH $$MINIUPNPC_INCLUDE_PATH $$QRENCODE_INCLUDE_PATH
+
+LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(MINIUPNPC_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
+
 LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
+
 # -lgdi32 has to happen after -lcrypto (see  #681)
 windows:LIBS += -lws2_32 -lshlwapi -lmswsock -lole32 -loleaut32 -luuid -lgdi32
+
 LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX -lboost_thread$$BOOST_THREAD_LIB_SUFFIX -lboost_chrono$$BOOST_LIB_SUFFIX
+
 windows:LIBS += -lboost_chrono$$BOOST_LIB_SUFFIX
 
 contains(RELEASE, 1) {
@@ -499,4 +502,5 @@ contains(RELEASE, 1) {
     LIBS += -lz -lrt -ldl
 }
 
-system($$QMAKE_LRELEASE -silent $$_PRO_FILE_)
+#system($$QMAKE_LRELEASE -silent $$_PRO_FILE_)
+system($$QMAKE_LRELEASE $$_PRO_FILE_)

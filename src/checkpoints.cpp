@@ -27,12 +27,12 @@ namespace Checkpoints
     //
     static MapCheckpoints mapCheckpoints =
         boost::assign::map_list_of
-         ( 0,      uint256("0x255616376de9a9b9fd99cf78728143dc3c8c5851ce7a7c0e206f95277930f386") )    // Genesis v1.0.1.1  
-//         ( 6500,      uint256("0x0000000008aaf279a144c9fe085f76046eae800fe49e7743ef477cc1dea55946") )    // Version 1002
-//         ( 20000,      uint256("0xd75b1c9bbae68bc5f1a556b82b851651a2bbd3701c0516bb6f4a34ae37425cc8") )   // Version 1003
-//         ( 50000,      uint256("0x0000000007ea31edeeea9b5038047cac91639bfcac3f4876230deeb4e569449e") )   // Version 1004
-//         ( 500000,      uint256("0x71ab8d761718638410f151b8b34290085fed410ec7a40d248b955a27e24acb6c") )  
-//         ( 938888,      uint256("0x000000019d99432d683aea41a13f6f0ee9d5e18866d955cadc135dba12d04132") )  // Version 1010
+         ( 0,          uint256("0x255616376de9a9b9fd99cf78728143dc3c8c5851ce7a7c0e206f95277930f386") )    // Genesis v1.0.1.1  
+         ( 5000,       uint256("0x3b3886f74522b5791930636c43e1adce9f6c978a53700017b7cbb43eac946ef8") )
+         ( 20000,      uint256("0x8d29298fdb678a2c44ab8751971e69486dde8d4e48fa44442259f8f2d2f5d0eb") )
+         ( 40000,      uint256("0x00000000035e3e8d7bdb3405e08227a90a547d40ec9f65f95c9e3502949376af") )
+         ( 60000,      uint256("0x8eb2eba2167c038b2dd28c3099a64ecc67f52cc3b96543e9777b6ed4c99c75ec") )
+         ( 64000,      uint256("0x3a5f1c4b0c10fda9a57c868bf9a33c5d3f85043d50b2f23a63e8a3ec52331aa5") )    // Update to v.1.1.0.1
          ;
 
     // TestNet has no checkpoints

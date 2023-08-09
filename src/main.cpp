@@ -1574,13 +1574,14 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
     if (IsProofOfWork())
     {
         int64_t nReward = GetProofOfWorkReward(nFees, pindex->nHeight);
-               
+
         // Check coinbase reward
-        if (vtx[0].GetValueOut() > nReward)
+        if (vtx[0].GetValueOut() > nReward && vtx[0].GetValueOut() != (5 * COIN + nFees))
             return DoS(50, error("ConnectBlock() : coinbase reward exceeded (actual=%d vs calculated=%d)",
                    vtx[0].GetValueOut(),
                    nReward));
     }
+
     if (IsProofOfStake())
     {
         // ppcoin: coin stake tx earns reward instead of paying fee
@@ -1590,7 +1591,7 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
 
         int64_t nCalculatedStakeReward = GetProofOfStakeReward(nCoinAge, nFees, pindex->nHeight);
 
-        if (nStakeReward > nCalculatedStakeReward)
+        if (nStakeReward > nCalculatedStakeReward && nStakeReward != (5 * COIN + nFees))
             return DoS(100, error("ConnectBlock() : coinstake pays too much(actual=%d vs calculated=%d)", nStakeReward, nCalculatedStakeReward));
     }
 
